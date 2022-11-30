@@ -1,0 +1,99 @@
+<!doctype html> <!-- Definerer at det er et html dokument-->
+<html lang="no">
+<head>
+  <title> Spill </title>
+  <meta charset="utf-8">   <!-- utf-8 gjør at vi kan bruke æ, ø og å -->
+  <style> /* lager css for skriften og designer boksen vi skal trykke på */
+    body {
+    font-family: Verdana, Geneva, sans-serif;
+    }
+    #box {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    display: none;
+    position: relative; 
+    }
+  </style>
+</head>
+
+
+
+<body>
+    <h1>Test reaksjonstiden din!</h1>
+    <p>Klikk på figurene som dukker opp på skjermen så fort som mulig: </p>
+    
+    <p id="printReactionTime"></p<>
+    
+    <div id="box"></div>
+    
+    
+    <script> //her starter jeg med å lage funksjonene som skal bli til reaksjonsspillet mitt
+        function getRandomColor() { //lager en funksjon som gjør at boksen får ulik farge etter hvert trykk
+                        
+            var letters = "0123456789ABCDEF".split('');
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.round(Math.random() * 15)];
+            } //ferdig med for-løkken
+            return color; 
+        
+        
+        } // slutter getRandomColor funksjonen
+        
+        
+        var clickedTime; var createdTime; var reactionTime; //lager ulike variabler for ulike tidsmålinger
+        
+        function makeBox() { 
+                var time=Math.random(); //setter opp variabel til tid 
+                time=time*3000; //ganger tilfeldig tall med 3000
+            
+            setTimeout(function() { 
+            
+                if (Math.random()>0.5) { //hvis tallet over blir lavere enn 0.5 setter den kantraduisen til 100px
+                
+                    document.getElementById("box").style.borderRadius="100px";
+                    
+                    } else { //hvis tallet over blir høyere enn 0.5 setter den radiusen fra 100px til 0px
+                    
+                        document.getElementById("box").style.borderRadius="0";
+                    } //dette gjør jeg for å variere om det blir en firkantet boks eller rund "boks"
+                    
+                var top= Math.random(); //denne delen av koden gjør slik at boksen dukker opp på random plasseringer og kombinerer dette med at det skifter til en random farge etter at man klikket på den forrige boksen
+                    top= top*300;
+                var left= Math.random();
+                    left= left*500; 
+                    
+                document.getElementById("box").style.top = top + "px";
+                document.getElementById("box").style.left = left + "px"; 
+            
+                document.getElementById("box").style.backgroundColor=getRandomColor();
+            
+                document.getElementById("box").style.display="block";
+                
+                createdTime=Date.now(); //lagrer tiden boksen dukket opp
+                
+            }, time); 
+        
+        }
+        
+        document.getElementById("box").onclick=function() { //denne delen regner ut reaksjonstiden 
+         
+            clickedTime=Date.now(); //lagrer tiden boksen ble klikket 
+            
+            reactionTime=(clickedTime-createdTime)/1000; //her regner koden ut hva reaksjonstiden til spilleren var
+            
+            document.getElementById("printReactionTime").innerHTML="Din reaksjonstid er: " + reactionTime + "sekunder!"; //printer reaksjonstiden slik at spilleren kan se hva det ble 
+            
+            this.style.display="none";
+            
+            makeBox();
+            
+            
+        }
+        
+        makeBox(); 
+        
+    </script>
+
+</body>
