@@ -1,0 +1,97 @@
+/*stilark som gir spillet ett fint utseende*/ 
+body{ /*lager oppsett mellom spillet og menyen til høyre*/
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: repeat(3,1fr);
+    grid-template-areas: 
+    "h h h h t"
+    "h h h h t"
+    "h h h h t" ;
+}
+#hoved{ grid-area: h;}
+#hoyre{ /* utformer menyen til høyre*/
+grid-area: t;
+width: 18vw;
+border:solid 30px rgb(129,129,129);
+text-align: center;
+}
+h2{ /*utformer skriften som brukes til scorecount*/
+    color: rgb(129, 129, 129);
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#hoved { /*legger til CSS grid i spillet i tillegg til litt andre estetiske forandringer*/
+    width: 70vw;
+    padding:30px;
+    margin:auto,80px;
+    display: grid;
+    gap: 5px;
+    background-color:rgb(129, 129, 129);
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: repeat(6,1fr);
+    grid-template-areas: 
+    "x x x x x x"
+    "x x x x x x"
+    "x x x x x x"
+    "x x x x x x"
+    "x x x x x x"
+    "x x x x x x";
+
+}
+
+.hvit{ /*hvordan rutene ser ut før de er trykket på*/
+    background-color: rgb(255, 255, 255);
+    height:150px;
+    text-decoration-color:white;
+}
+.gronn{ /*hvordan ruten som er riktig ser ut når den trykkes på*/
+    background-color:rgb(147, 236, 14);
+    height:150px;
+    text-decoration-color:rgb(147, 236, 14) ;
+}
+.gul{ /*hvordan ruter nærme målet ser ut når de blir trykket på*/
+    background-color:yellow;
+    height:150px;
+    text-decoration-color: yellow;
+}
+.rod{ /*hvordan helt feil ruter ser ut når de blir trykket på*/ 
+    background-color:red;
+    height:150px;
+    text-decoration-color: red;
+}
+.oransje{ /*hvordan litt nærme ruter ser ut når de blir trykekt på*/
+    background-color:rgba(255, 187, 0, 0.795);
+    height:150px;
+    text-decoration-color:rgba(255, 187, 0, 0.795);
+   
+}
+#vinner{ /*utformer diven som dukker opp når man finner den hemmelige ruten*/
+    position: fixed;
+    top:50px;
+    width:80%;
+    height:300px;
+    border:solid 30px rgb(129,129,129);
+    left:60px;
+    padding:40px;
+    background-color: white;
+    color: rgb(129, 129, 129);
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/*endrer farge på tekstelementene i menyen til høyre for å gi en forståelse av spillet*/
+#langtUnna{
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+#littNaerme{
+    color: rgba(255, 187, 0, 0.795);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+#veldigNaerme{
+    color: yellow;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}

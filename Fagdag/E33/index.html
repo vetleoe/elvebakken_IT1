@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <!-- et spill hvor man skal finne skatten i et rutenett med 36 ruter-->
+    <title> Skattejakt </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stillark.CSS"> <!--link til stilarket-->
+</head>
+<body>
+<div id="hoyre"> <!-- en div til høyre for spillet med scorecount og "regler"-->
+    <h2>Antall forsøk</h2><!-- teller som teller antall forsøk-->
+    <p id="langtUnna"> Langt unna </p> <!-- hvis man trykker langt unna blir ruten rød-->
+    <p id="littNaerme">Litt Nærme </p> <!-- trykker man innenfor en 2-ruters radius blir ruten oransje-->
+    <p id="veldigNaerme">Veldig Nærme</p> <!--trykker man innenfor en 1-rute radius blir ruten gul-->
+</div>
+    <div id="hoved"> <!--hoved diven som inneholder 36 mindre diver-->
+        <div id="1" class="hvit" data-rad="1" data-kolonne="1"></div>
+        <div id="2" class="hvit" data-rad="1" data-kolonne="2"></div>
+        <div id="3" class="hvit" data-rad="1" data-kolonne="3"></div>
+        <div id="4" class="hvit" data-rad="1" data-kolonne="4"></div>
+        <div id="5" class="hvit" data-rad="1" data-kolonne="5"></div>
+        <div id="6" class="hvit" data-rad="1" data-kolonne="6"></div>
+
+        <div id="7" class="hvit" data-rad="2" data-kolonne="1"></div>
+        <div id="8" class="hvit" data-rad="2" data-kolonne="2"></div>
+        <div id="9" class="hvit" data-rad="2" data-kolonne="3"></div>
+        <div id="10" class="hvit" data-rad="2" data-kolonne="4"></div>
+        <div id="11" class="hvit" data-rad="2" data-kolonne="5"></div>
+        <div id="12" class="hvit" data-rad="2" data-kolonne="6"></div>
+
+        <div id="13" class="hvit" data-rad="3" data-kolonne="1"></div>
+        <div id="14" class="hvit" data-rad="3" data-kolonne="2"></div>
+        <div id="15" class="hvit" data-rad="3" data-kolonne="3"></div>
+        <div id="16" class="hvit" data-rad="3" data-kolonne="4"></div>
+        <div id="17" class="hvit" data-rad="3" data-kolonne="5"></div>
+        <div id="18" class="hvit" data-rad="3" data-kolonne="6"></div>
+
+        <div id="19" class="hvit" data-rad="4" data-kolonne="1"></div>
+        <div id="20" class="hvit" data-rad="4" data-kolonne="2"></div>
+        <div id="21" class="hvit" data-rad="4" data-kolonne="3"></div>
+        <div id="22" class="hvit" data-rad="4" data-kolonne="4"></div>
+        <div id="23" class="hvit" data-rad="4" data-kolonne="5"></div>
+        <div id="24" class="hvit" data-rad="4" data-kolonne="6"></div>
+
+        <div id="25" class="hvit" data-rad="5" data-kolonne="1"></div>
+        <div id="26" class="hvit" data-rad="5" data-kolonne="2"></div>
+        <div id="27" class="hvit" data-rad="5" data-kolonne="3"></div>
+        <div id="28" class="hvit" data-rad="5" data-kolonne="4"></div>
+        <div id="29" class="hvit" data-rad="5" data-kolonne="5"></div>
+        <div id="30" class="hvit" data-rad="5" data-kolonne="6"></div>
+
+        <div id="31" class="hvit" data-rad="6" data-kolonne="1"></div>
+        <div id="32" class="hvit" data-rad="6" data-kolonne="2"></div>
+        <div id="33" class="hvit" data-rad="6" data-kolonne="3"></div>
+        <div id="34" class="hvit" data-rad="6" data-kolonne="4"></div>
+        <div id="35" class="hvit" data-rad="6" data-kolonne="5"></div>
+        <div id="36" class="hvit" data-rad="6" data-kolonne="6"></div>
+    </div>
+</body>
+<!--script med javascript som bruker html-elementene-->
+<script>
+
+    let ruterEl = document.querySelectorAll("#hoved > div"); //henter alle de 36 rutene fra HTML til javascript
+    let tilfeldigTall=Math.random()*36; 
+    tilfeldigTall=Math.floor(tilfeldigTall);
+    let riktigRute=ruterEl[tilfeldigTall]; //bruker tilfeldig tall for å velge en av de 36 rutene som den riktige ruten
+    
+    for (let i = 0; i < ruterEl.length; i++) { //lytter til om rutene er trykket på
+        ruterEl[i].addEventListener("click", sjekkRute); //brukes i spillet
+        ruterEl[i].addEventListener("click",scoreCount); //brukes i scorecount}
+    }
+    let riktigRuteRad=Number(riktigRute.dataset.rad); //finner rad og kolonne for den riktige ruten
+    let riktigRuteKolonne=Number(riktigRute.dataset.kolonne);
+
+    let overskriftEl = document.querySelector("#hoyre>h2"); //lager en scorecount i diven "hoyre"
+    let antallTrykk = 0;
+    function scoreCount() {
+            antallTrykk++;
+            overskriftEl.innerHTML = "Du har brukt " + antallTrykk + " forsøk."; //øker med 1 for hvert trykk
+        }
+    function sjekkRute(e) { //resten av spillet ligger i denne funksjonen
+        let trykketRute = e.target;
+        let ruteRad=Number(trykketRute.dataset.rad); 
+        let ruteKolonne=Number(trykketRute.dataset.kolonne); //definerer ruten som er trykket på og henter kolonne og rad
+       
+        let differanseRad=Math.abs(riktigRuteRad-ruteRad); //lager tall for avstanden til riktig rute i både rad og kolonne
+        let differanseKolonne=Math.abs(riktigRuteKolonne-ruteKolonne);
+            
+        if(differanseRad===0 && differanseKolonne===0){ //første mulighet, hvis begge avstandene er null og det er riktig rute
+            trykketRute.setAttribute("class", "gronn"); //ruten blir grønn
+            let bodyEl = document.querySelector("body");
+            let vinnerEl = document.createElement("div");
+            vinnerEl.id = "vinner";
+            bodyEl.appendChild(vinnerEl);
+            let h1El = document.createElement("h1");
+            h1El.innerHTML = "Du fant Skatten!";
+            vinnerEl.appendChild(h1El);
+            let avsnittEl = document.createElement("p");
+            avsnittEl.innerHTML = "du brukte  " + (antallTrykk+1) + "  forsøk";
+            vinnerEl.appendChild(avsnittEl); //hele koden lager en ny div som sier at man har vunnet og antall forsøk man brukte
+
+            let hoyreEl = document.querySelector("#hoyre");
+            hoyreEl.innerHTML=""; //tømmer menyen til høyre
+
+            }
+        else if(differanseRad===0 && differanseKolonne===1){ //hvis man trykker innen 1 rute radius av riktig rute
+            trykketRute.setAttribute("class", "gul");//den blir gul
+            }
+        else if(differanseRad===1 && differanseKolonne===0){ //hvis man trykker innen 1 rute radius av riktig rute
+            trykketRute.setAttribute("class", "gul");} //den blir også gul
+        else if(differanseRad===1 && differanseKolonne===1){ //hvis man trykker innen 1 rute radius av riktig rute
+                trykketRute.setAttribute("class", "gul"); //også gul
+        }
+        else if(differanseRad===2 && differanseKolonne<=2){ //hvis man trykker innen 2 ruters radius av riktig rute
+            trykketRute.setAttribute("class", "oransje");//den blir oransje
+        }
+        else if(differanseRad<=2 && differanseKolonne===2){ //hvis man trykker innen 2 ruters radius av riktig rute 
+                trykketRute.setAttribute("class", "oransje");//den blir oransje
+            }
+        else {//hvis man trykker veldig langt unna blir den rød
+            trykketRute.setAttribute("class","rod")}
+        }
+</script>
