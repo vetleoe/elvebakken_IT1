@@ -1,0 +1,92 @@
+
+*{
+    margin:0;
+    padding:0; 
+}
+
+#spill{
+    height:500px;
+    width:600px;
+    border: 2px solid black;
+    margin: 10rem auto; 
+}
+
+
+
+
+#block{ /*definerer blokken */
+    height: 70px;
+    width: 40px;
+    background-color: aqua;
+    position:relative;
+    top:430px; 
+    left:560px;
+    animation: move 1.5s linear infinite;
+}
+
+/*Det er det som gjør at karakteren min "hopper" */
+    @keyframes move{
+        0%{
+            left:560px;
+
+        }
+        100%{
+            left:0px;
+
+        }
+
+    }
+
+
+#karakter{
+    position:relative; 
+    top: 365px;
+    left: 20px;
+}
+
+#karakter img{
+    height: 70px;
+    width:67px; 
+}
+
+/*    Her står hva egenskapene til "resultatet" skal være */
+#resultat{
+    height: 200px;
+    width: 400px;
+    background-color: white;
+    margin: 3rem auto;
+    text-align: center;
+    border-radius: 20px;
+    display: none /*har det på none slik at det bare kommer opp når jeg dør(dette programmerer jeg med javascript*/;
+}
+/*  Her er stillingen   */
+#score{
+    font-size: 2.2rem;
+    color: red;
+
+}
+
+/*  Her er omstartsknappens egenskaper   */
+#knapp{
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: red;
+    color: black;
+    font-size: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    /*text-transform: uppercase;*/
+}
+
+
+/*  Under er kode som jeg ikke fikk til å fungere, skal fikse det her neste gang jeg får mulighet   */
+#dead{
+    top: 400px;
+    left: 20px;
+    
+}
+
+#dead img{
+    height:150px;
+    width:150px; 
+}
