@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stilark.css">
+    <title>Hangman</title>
+</head>
+
+
+<body>
+    <div class="hoved">
+        <h1>Hangman</h1>
+        <input type = "text" id ="bokstav" onkeydown = "if (event.keyCode == 13) document.getElementById('knapp').click()" placeholder="Gjett en bokstav"/>    
+        <button type="button" id="knapp">Gjett</button> <!-- Man kan trykke på enter for å bruke knappen-->
+        <button onClick="window.location.reload();">Prøv Igjen</button>
+        <div id="fyllord"></div>
+        <div id="gjetta">Du har 7 sjanser</div>
+        <div id="gjettaBokstaver"></div>
+        <div id="melding"></div>
+        <div id="hangman"></div>
+        <p id="neste"><a href="../E18/index.html">Gå til neste git.</a></p>
+    </div>
+
+
+
+    <script>
+        let bokstav = document.querySelector("#bokstav"); //Variabler for html
+        let knappEl = document.querySelector("button");
+        let fyllOrdE1 = document.querySelector("#fyllord")
+        let meldingE1 = document.querySelector("#melding")
+        let gjettaE1 = document.querySelector("#gjetta")
+        let gjettaBokstaverE1 = document.querySelector('#gjettaBokstaver')
+        let hangmanE1 = document.querySelector("#hangman")
+        let reload = document.querySelector('#reload')
+
+        let muligeOrd=['hest','flaske','mat','skole','mango','tango','sving','vals','kendo','ape','lampe','bæsj','skjerm'] //Mulige ord satt på random
+        let riktigOrd=muligeOrd[Math.floor(Math.random() * muligeOrd.length)]; //Det riktige ordet
+        let alfabet = 'abcdefghijklmnopqrstuvwxyzæøå'.split(''); //Alfabetet, brukes for å minne bruker om at de har gjettet en bosktav
+        let gjettetPlass=[];
+        let gjettetBokstav; //Bokstaven man gjetter
+        let gjettedeBokstaver=[] //Liste over bokstaver man har gjettet
+        let antallGjett=7; //Antall gjett man skal ha
+        let fyllOrdArr=[]; //Array for fyllord "_ _ _ _ _" liksom
+        let fyllOrdString=''; //En string som brukes senere for å bruke'.join' på fyllord
+        let hangmanBilder = [` //
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========`, `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========`] //Hvis man bruker konsollen
+
+
+        for(let i=0;i < riktigOrd.length;i++){
+            fyllOrdArr.push('_'); //legger inn et '_' for hver bokstav i det riktige ordet
+        }
+
+        function fyllOrd(fyllOrdArr,fyllOrdString){
+            fyllOrdString = fyllOrdArr.join(' ')
+            fyllOrdE1.innerHTML = '<p>'+ fyllOrdString + '</p>'
+            console.log(fyllOrdString)
+        } //En funskjon for å gjøre arrayet til en streng for å så logge det til konsollen så detblir slik: '_ _ _ _ _'
+
+        function fjernDuplikat(arr) {
+            return arr.filter((item,index) => arr.indexOf(item) === index);
+        } //En funksjon som fjerner duplikate elementer fra et arrayy (tatt fra nettet)
+        
+        function gjettedeBokstListe(gjettetBokstav,gjettedeBokstaver){
+            gjettedeBokstaver.push(gjettetBokstav)
+            gjettedeBokstaver.sort()
+            gjettedeBokstaver = fjernDuplikat(gjettedeBokstaver)
+            console.log('Bokstaver du har gjettet så langt: ' + gjettedeBokstaver)
+            gjettaBokstaverE1.innerHTML = '<p>Bokstaver du har gjetta så langt: '+gjettedeBokstaver+'</p>'
+        } //Funksjon som sorterer og viser hvilke bokstaver som har blitt gjettet
+
+        function hangmanLøkka(){
+            if(antallGjett > 0){ //Så lenge riktige ord er ikke lik gjettet ord
+                gjettetBokstav = bokstav.value.toLowerCase(); //Gjett en bokstav
+                console.log(gjettetBokstav)
+
+                if(riktigOrd.indexOf(gjettetBokstav) > -1){ //Man får '-1' hvis bokstaven ikke eksiserer, derfor funker dette for å sjekke om det er en bokstav der
+                    if (riktigOrd){
+                        gjettetPlass.push(riktigOrd.indexOf(gjettetBokstav)); //setter inn en tallverdi for posisjonen til bokstaven
+                        gjettetPlass.sort(function(a, b){return a-b}); //sorterer listen numerisk
+                        gjettetPlass = fjernDuplikat(gjettetPlass) //Fjerner duplikatelementer fra arrayet
+                        fyllOrdArr[riktigOrd.indexOf(gjettetBokstav)] = gjettetBokstav
+                        console.log('Du gjettet bokstaven '+ gjettetBokstav + ' og det var riktig! Du har ' +antallGjett + ' sjanser til å gjette igjen.')  
+                    } 
+                }
+
+                else if (riktigOrd.indexOf(gjettetBokstav) == -1){ //Hvis man har feil trekker den poeng
+                    antallGjett-=1
+                    if (antallGjett<=0){
+                        console.log('Du tapte! Det riktige ordet var: ' + riktigOrd)
+                        meldingE1.innerHTML = '<p>Du tapte! Det riktige ordet var: '+riktigOrd+'</p>'
+                        hangmanE1.innerHTML='<img src="hangmen/hangman8.png" alt="hangman object-fit: contain">'
+                    }   
+                    else{
+                        console.log('Du gjettet bokstaven'+ gjettetBokstav + ' og det var feil. Du har ' +antallGjett + ' sjanser til å gjette igjen.')
+                        gjettaE1.innerHTML='<p> Du gjettet bokstaven: ' + gjettetBokstav + ', og det var feil. Du har ' +antallGjett + ' sjanser til å gjette igjen.</p>'
+                }
+                }
+
+                if (antallGjett==7){
+                    console.log(hangmanBilder[0])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman1.png" alt="hangman">'
+                }  
+
+                else if (antallGjett==6){
+                    console.log(hangmanBilder[1])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman2.png" alt="hangman">'
+                }
+                else if (antallGjett==5){
+                    console.log(hangmanBilder[2])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman3.png" alt="hangman">'
+                }
+                else if (antallGjett==4){
+                    console.log(hangmanBilder[3])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman4.png" alt="hangman">'
+                }
+                else if (antallGjett==3){
+                    console.log(hangmanBilder[4])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman5.png" alt="hangman">'
+                }
+                else if (antallGjett==2){
+                    console.log(hangmanBilder[5])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman6.png" alt="hangman">'
+                }
+                else if (antallGjett==1){
+                    console.log(hangmanBilder[6])
+                    hangmanE1.innerHTML='<img src="hangmen/hangman7.png" alt="hangman">'
+                }
+
+                fyllOrd(fyllOrdArr,fyllOrdString)
+                gjettedeBokstListe(gjettetBokstav,gjettedeBokstaver)
+
+
+                if (gjettetPlass.length==riktigOrd.length){ //Man har vunnet hvis man har like mange bokstaver som det riktige ordet.
+                    if(antallGjett>0){
+                    console.log('Du vant! Det riktige ordet var: ' + riktigOrd)
+                    meldingE1.innerHTML = '<p>Du vant! Det riktige ordet var: '+riktigOrd+'</p>'
+                }
+                
+                }
+                console.log('') //Noe mellomrom i konsollen for orderns skyld 
+        }
+        }
+        console.log(hangmanBilder[0])
+        fyllOrd(fyllOrdArr,fyllOrdString)
+        gjettedeBokstListe(gjettetBokstav,gjettedeBokstaver)
+        hangmanE1.innerHTML='<img src="hangmen/hangman1.png" alt="hangman">'
+        knappEl.addEventListener("click", function handleClick(event){
+            hangmanLøkka() //Kjører programmet hver gang man klikker på enter
+            bokstav.value=''; //Resetter input boksen
+        });
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>
