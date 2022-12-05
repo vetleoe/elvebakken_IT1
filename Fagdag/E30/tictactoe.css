@@ -1,0 +1,55 @@
+body {  /*Definerer skrifttype og hvor teksten skal være */
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center; 
+}
+
+hr{   /*Definerer den horisontale linja*/
+    width: 500px;
+    height: 3px; 
+    background-color: black;
+}
+
+#board{  /*Definerer brettet*/
+    width: 450px;
+    height: 450px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;  /*Linjene blir "limt" fast sammen*/
+}
+
+/*Definerer de 9 boksene i brettet (3x3)*/
+/*Fordi brettet totalt har en bredde og høyde på 450px, er høyden og bredden i boksene
+150 (450/3), men fordi vi trenger litt plass til strekene har vi 147px, (3px til strekene)*/
+.tile{
+    width: 147px;
+    height: 147px;
+    font-size: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Definerer den horisontale linja*/
+.horizontal-line {
+    border-bottom: 3px solid black;
+}
+
+/*Definerer den vertikale linja*/
+.vertical-line {
+    border-right: 3px solid black;
+}
+
+/*Definerer winner, alstå når noen vinner*/
+.winner {
+    background-color: lightblue;
+    color: lightseagreen;
+}
+
+/*Definerer "start på nytt" knappen*/
+#knapp {
+    padding: 8px 16px;
+    color: black;
+    margin-top: 25px;
+    cursor: pointer; /*Når man hoverer over boksen, skifter musepekeren, (for å vise at man kan trykke på boksen)*/
+    background-color: rgb(255, 255, 255);
+}
