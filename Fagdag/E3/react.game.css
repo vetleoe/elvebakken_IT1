@@ -1,0 +1,63 @@
+#app{ /*gjelder hele spillet*/
+    display: flex;
+    height: 500px;
+    width: 1200px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.click-area {
+    flex-grow: 1; /*gjør det mulig for "click-area" å utvide seg så mye sm mulig innen for satt bredde (sammarbeider med [display: flex;])*/
+
+    display: flex;
+    align-items: center;
+    
+    background: #950000;
+    cursor: pointer; /*gjør pilen om til peker når den hover*/
+
+}
+
+.display-text {
+    padding: 24px;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    color: white;
+}
+
+.recent-scores {
+    display: flex;
+    flex-direction: column; /*[scores] plasserer seg likt under hverandre i kolonner*/
+    width: 125px;
+    flex-shrink: 0; /*passer på at bredden av "scores" ikke endres hvis andre elementer dytter på dem*/
+}
+
+.score {
+    flex-grow: 1; /*tar like mye høyde og tilatter ikke luft i bunnen*/
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+}
+
+.score:nth-child(odd) { /*gjelder annenhver "score"*/
+    background: #eeeeee;
+
+}
+
+
+.knapper .knappChild {
+    height: 100px;
+    width: 200px;
+    border: solid black 3px;
+    border-radius: 10px;
+    margin-left: 25px;
+    margin-bottom: 40px;
+    background: #eeeeee;
+    text-align: center;
+    padding: auto;
+    cursor: pointer; 
+    font-size: large;
+}

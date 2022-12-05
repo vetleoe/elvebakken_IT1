@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reaksjonstest</title>
+    <link rel="stylesheet" href="react.game.css" >
+    <script src="react.game.script.js" defer></script>
+</head>
+<body onbeforeunload="return bekreft()">
+    <div id="info">
+        <h1>Test reaksjonstiden din!</h1>
+        <p>Trykk på skjermen når den blir grønn. Tiden blir målt i millisekunder.</p>
+    </div>
+
+    <div id="app"> <!--container for game-->
+        <div class="click-area"> <!--hovedboksen (rød/grønn)-->
+            <div class="display-text">Velkommen. Trykk for å starte! </div>
+        </div> 
+
+        <div class="recent-scores">
+            <div class="score">-</div>
+            <div class="score">-</div>
+            <div class="score">-</div>
+            <div class="score">-</div>
+            <div class="score">-</div>
+        </div>
+
+    <div class="knapper">
+        <button class="knappChild" id="restart" onclick="location.reload()"> Start på nytt </button> <!--reloader siden og strater spillet på nytt-->
+        <br> <!--break, tvinger knappene under hverandre-->
+        <button class="knappChild" id="neste" onclick="replace()"> Neste spill </button> <!--kjører funksjonen "replace()" fra script-->
+    </div>    
+    
+    </div>
+</body>
+</html>
