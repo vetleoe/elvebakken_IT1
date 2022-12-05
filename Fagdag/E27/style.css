@@ -1,0 +1,63 @@
+#header{
+    text-align: center;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+#forrige_game{
+    background-color: #ffffff;
+    border: black solid;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+#neste_game{
+    background-color: #ffffff;
+    border: black solid;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+#gjemt_bytt{
+    background: transparent;
+     border: none !important;
+    font-size:0;
+    width: 20px;
+    height: 20px;
+
+}
+button:hover{
+cursor: pointer;}
+
+.cell{
+    width: 75px;
+    height: 75px;
+    border: 2px solid;
+    box-shadow: 0 0 0 2px;
+    line-height: 75px;
+    font-size: 50px;
+    cursor: pointer;
+}
+#gameContainer{
+    font-family: "Permanent Marker",;
+    text-align: center;
+}
+#cellContainer{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 225px;
+    margin: auto;
+}
